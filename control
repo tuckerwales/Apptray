@@ -1,0 +1,9 @@
+Package: com.digibit.apptray
+Name: Apptray
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome MobileSubstrate tweak!
+Maintainer: Digibit Labs
+Author: Digibit Labs
+Section: Tweaks
