@@ -26,7 +26,7 @@
 @end
 
 @interface SBNotificationCenterViewController : NSObject {}
-- (SBBulletinObserverViewController*)newSegmentViewControllerWithTitle:(NSString *)title;
+- (SBBulletinObserverViewController*)newSegmentViewController;
 @end
 
 @interface SBModeViewController : NSObject {
@@ -42,5 +42,5 @@
 @end
 
 @interface SBNotificationCenterController : NSObject {}
-- (SBBulletinObserverViewController*)newSegmentViewControllerWithTitle:(NSString *)title;
+- (SBBulletinObserverViewController*)newSegmentViewController;
 @end

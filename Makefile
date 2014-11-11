@@ -6,7 +6,7 @@ ARCHS = armv7 arm64
 include theos/makefiles/common.mk
 
 TWEAK_NAME = Apptray
-Apptray_FILES = Tweak.xm ApptrayViewController.xm
+Apptray_FILES = Tweak.xm ApptrayViewController.xm SettingsLoader.m
 Apptray_FRAMEWORKS = UIKit QuartzCore CoreGraphics
 Apptray_LIBRARIES = grid
 

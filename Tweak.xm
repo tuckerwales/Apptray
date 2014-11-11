@@ -4,15 +4,23 @@
 #import "Interfaces.h"
 #import "ApptrayViewController.h"
 
+#import "SettingsLoader.h"
+
 ApptrayViewController *apptrayVC;
 
+%group iOS8
 %hook SBNotificationCenterController
 
 %new
-- (SBBulletinObserverViewController*)newSegmentViewControllerWithTitle:(NSString *)title {
+- (SBBulletinObserverViewController*)newSegmentViewController {
 
   SBBulletinObserverViewController *newView = [[%c(SBBulletinObserverViewController) alloc] initWithObserverFeed:nil];
-  newView.title = title;
+  
+  if ([[[SettingsLoader sharedInstance] tabText] length] > 0) {
+    newView.title = [[SettingsLoader sharedInstance] tabText];
+  } else {
+    newView.title = @"Apptray";
+  }
 	
   id sbVC = MSHookIvar<id>(self, "_viewController");
   UIView *contentView = MSHookIvar<UIView*>(sbVC, "_contentView");
@@ -31,6 +39,8 @@ ApptrayViewController *apptrayVC;
 
 - (void)_setupForViewPresentation {
 
+  [[SettingsLoader sharedInstance] loadSettings];
+
   %orig;
 
   NSLog(@"[Apptray]: Notification center is about to be presented.");
@@ -43,14 +53,18 @@ ApptrayViewController *apptrayVC;
   NSLog(@"Number of segments: %lld", numberOfSegments);
   
     
-  SBBulletinObserverViewController *newView = [self newSegmentViewControllerWithTitle:@"Apptray"];
+  SBBulletinObserverViewController *newView = [self newSegmentViewController];
   
   NSLog(@"[Apptray] - View: %@", newView.view);
   NSLog(@"[Apptray] - View: %@", newView.view.subviews);
       
   [sbModeVC _addBulletinObserverViewController:newView];  
-  //[sbModeVC addViewController:[self newSegmentViewControllerWithTitle:@"Apptray"]];
 
 }
 
 %end
+%end
+
+%ctor {
+  %init(iOS8)
+}

@@ -9,6 +9,8 @@
 #import "ApptrayViewController.h"
 #import "Interfaces.h"
 
+#import "SettingsLoader.h"
+
 @interface ApptrayViewController ()
 @end
 
@@ -70,12 +72,10 @@
 	[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"IconCell"];
 	[self.collectionView setBackgroundColor:[UIColor clearColor]];
 	[self.view addSubview:self.collectionView];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UICollectionView Datasource
@@ -97,6 +97,11 @@
 	[btn setBackgroundImage:img forState:UIControlStateNormal];
 	[cell setBackgroundView:btn];
 	cell.userInteractionEnabled = YES;
+	if ([[SettingsLoader sharedInstance] iconOpacity]) {
+		cell.alpha = [[[SettingsLoader sharedInstance] iconOpacity] floatValue];
+	} else {
+		cell.alpha = 1.0;
+	}
     return cell; 
 }
 
@@ -112,16 +117,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: Deselect item
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-	cell.alpha = 0.8;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-	cell.alpha = 1.0;
 }
 
 #pragma mark – UICollectionViewDelegateFlowLayout
