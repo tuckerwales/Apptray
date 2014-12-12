@@ -1,14 +1,15 @@
 #import <Preferences/Preferences.h>
 #import <Preferences/PSTableCell.h>
 
-@interface HeaderCell : PSTableCell{
+@interface HeaderCell : PSTableCell {
 	UIImageView *_background;
 }
 @end
 
 @implementation HeaderCell
+
 	- (id)initWithSpecifier:(PSSpecifier *)specifier{
-	    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"headerCell" specifier:specifier];
+	    self = (HeaderCell*)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"headerCell"];
 	    if (self) {
 			UIImage *bkIm = [[UIImage alloc] initWithContentsOfFile:[[NSBundle bundleWithPath:@"/Library/PreferenceBundles/ApptrayPrefs.bundle"] pathForResource:@"logo" ofType:@"png"]];
 			_background = [[UIImageView alloc] initWithImage:bkIm];
@@ -131,12 +132,6 @@
 
 - (void)followOnTwitter:(PSSpecifier*)specifier
 {
-	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/digibitlabs"]];
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/DarkMalloc"]];
 }
-
-- (void)visitWebsite:(PSSpecifier*)specifier
-{
-	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://digibitapps.com"]];
-}
-
 @end

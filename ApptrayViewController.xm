@@ -9,8 +9,6 @@
 #import "ApptrayViewController.h"
 #import "Interfaces.h"
 
-#import "SettingsLoader.h"
-
 @interface ApptrayViewController ()
 @end
 
@@ -97,11 +95,6 @@
 	[btn setBackgroundImage:img forState:UIControlStateNormal];
 	[cell setBackgroundView:btn];
 	cell.userInteractionEnabled = YES;
-	if ([[SettingsLoader sharedInstance] iconOpacity]) {
-		cell.alpha = [[[SettingsLoader sharedInstance] iconOpacity] floatValue];
-	} else {
-		cell.alpha = 1.0;
-	}
     return cell; 
 }
 
@@ -109,7 +102,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath 
 {
-    // TODO: Select Item
 	NSLog(@"Selected: %@", [self.apps objectAtIndex:indexPath.row]);
 	SBUIController *sbController = [%c(SBUIController) sharedInstance];
 	[sbController activateApplicationAnimated:[(SBApplicationIcon*)[self getApplicationIconForIdentifier:[self.apps objectAtIndex:indexPath.row]] application]];
