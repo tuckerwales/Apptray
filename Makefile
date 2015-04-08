@@ -1,6 +1,6 @@
 GO_EASY_ON_ME = 1
 THEOS_DEVICE_IP = 127.0.0.1
-SDKVERSION = 8.1
+SDKVERSION = 8.2
 ARCHS = armv7 arm64
 
 include theos/makefiles/common.mk

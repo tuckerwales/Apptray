@@ -14,14 +14,26 @@
 
 @implementation ApptrayViewController
 
+float alpha;
+
 @synthesize apps, collectionView;
 
 - (id)init {
 	self = [super init];
 	if (self) {
 		[self loadApps];
+		[self loadPrefs];
 	}
 	return self;
+}
+
+- (void)loadPrefs {
+	NSDictionary *prefsDictionary = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.digibit.apptray.plist"];
+  	if ([prefsDictionary valueForKey:@"IconOpacity"] != nil) {
+	  alpha = [[prefsDictionary valueForKey:@"IconOpacity"] floatValue];
+	} else {
+		alpha = 1.0;
+	}
 }
 
 - (void)loadApps {
@@ -93,6 +105,7 @@
 	UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0,0, img.size.width, img.size.height)];
 	btn.userInteractionEnabled = NO;
 	[btn setBackgroundImage:img forState:UIControlStateNormal];
+	btn.alpha = alpha;
 	[cell setBackgroundView:btn];
 	cell.userInteractionEnabled = YES;
     return cell; 
