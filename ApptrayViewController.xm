@@ -16,15 +16,46 @@
 
 float alpha;
 
-@synthesize apps, collectionView;
+@synthesize apps, collectionView, orderedDict;
 
 - (id)init {
 	self = [super init];
 	if (self) {
 		[self loadApps];
+		[self syncPlists];
 		[self loadPrefs];
 	}
 	return self;
+}
+
+- (void)syncPlists {
+
+	if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/com.digibit.apptray.applist.ordered.plist"]) {
+
+		NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+
+		for (int i = 0; i < [self.apps count]; ++i) {
+			
+			[dict setValue:[self.apps objectAtIndex:i] forKey:[NSString stringWithFormat:@"%d", i]];
+
+		}
+
+		[dict writeToFile:@"/var/mobile/Library/Preferences/com.digibit.apptray.applist.ordered.plist" atomically:YES];
+
+
+	} else {
+
+		NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.digibit.apptray.applist.ordered.plist"];
+
+		for (NSString *num in dict) {
+			NSString *ident = [dict valueForKey:num];
+			if (![self.apps containsObject:ident]) {
+				[dict removeObjectForKey:num];
+			}
+		}
+
+	}
+
 }
 
 - (void)loadPrefs {

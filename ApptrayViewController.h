@@ -12,6 +12,7 @@
 
 @interface ApptrayViewController : UIViewController <UICollectionViewDataSource_Draggable, UICollectionViewDelegate> {
 	NSMutableArray *apps;
+	NSDictionary *orderedDict;
 	UICollectionView *collectionView;
 	CGRect viewFrame;
 }
@@ -19,6 +20,7 @@
 - (void)setViewFrame:(CGRect)frame;
 
 @property (nonatomic, strong) NSMutableArray *apps;
+@property (nonatomic, strong) NSDictionary *orderedDict;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
 @end
